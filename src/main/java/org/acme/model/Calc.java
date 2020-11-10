@@ -1,14 +1,8 @@
 package org.acme.model;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
-import org.hibernate.annotations.GeneratorType;
+import javax.persistence.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-
-@Entity
+@Entity(name ="calc")
 public class Calc  {
 
     @Id
@@ -17,10 +11,27 @@ public class Calc  {
     private Long id;
     public int number1;
     public int number2;
-    public int count;
+    @Column(name = "countofnumbers")
+    public int countofnumbers;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public int getCountofnumbers() {
+        return countofnumbers;
+    }
+
+    public void setCountofnumbers(int count) {
+        this.countofnumbers = count;
+    }
 
     public void countTheResult(){
-        this.count=this.number1+this.number2;
+        this.countofnumbers =this.number1+this.number2;
     }
 
     public int getNumber1() {
@@ -45,7 +56,7 @@ public class Calc  {
                 "id=" + id +
                 ", number1=" + number1 +
                 ", number2=" + number2 +
-                ", count=" + count +
+                ", countOfNumbers=" + countofnumbers +
                 '}';
     }
 }
