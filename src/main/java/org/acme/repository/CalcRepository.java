@@ -35,4 +35,8 @@ public class CalcRepository implements PanacheRepository<Calc> {
         int biac=update("number1= ?1,number2=?2 where id=?3",calc.getNumber1(),calc.getNumber2(),id);
     }
 
+    public Calc getCalcByCount(int count){
+        return find("count",count).firstResult();
+    }
+
 }
