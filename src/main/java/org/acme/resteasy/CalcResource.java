@@ -21,8 +21,10 @@ public class CalcResource {
     @POST
     @Transactional
     @Consumes(MediaType.APPLICATION_JSON)
-    public void createCalc(Calc calc){
+    @Produces(MediaType.APPLICATION_JSON)
+    public Calc createCalc(Calc calc){
         calcRepository.createCalc(calc);
+        return calc;
     }
 
     @GET

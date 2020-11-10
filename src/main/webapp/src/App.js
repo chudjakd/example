@@ -2,6 +2,7 @@
 import React from 'react';
 import './App.css';
 import TableAllClc from './tableAllCalc'
+import CrudMenu from './crudMenu'
 
 class App extends React.Component {
 
@@ -10,10 +11,11 @@ class App extends React.Component {
 
   return (
     <div className="App">
-      <header className="App-header">
+        <header className="App-header">
+            <TableAllClc/>
+            <CrudMenu/>
+        </header>
 
-        <TableAllClc/>
-      </header>
     </div>
   );
   }

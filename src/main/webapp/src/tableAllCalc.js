@@ -9,13 +9,22 @@ class tableAllCalc extends React.Component {
 
         this.state={
             calc:[],
-            isLoaded:false
+            isLoaded:false,
+            dataToReactTable:[{id:1,name:'Picko'},{id:2,name:'Picko'}]
         }
 
         this.renderTableCalc=this.renderTableCalc.bind(this)
+        this.getDataForTable=this.getDataForTable.bind(this)
     }
 
     componentDidMount() {
+        this.getDataForTable();
+        setInterval(this.getDataForTable,3000)
+    }
+
+    //Fetch data from backend
+    getDataForTable(){
+        console.log('------------------Fetchujem Data-----------------------')
         fetch("http://localhost:8080/calc")
             .then(res => res.json())
             .then(
@@ -24,9 +33,8 @@ class tableAllCalc extends React.Component {
                         calc: result,
                         isLoaded:true
                     });
-                    console.log(result)
-                    //console.log('Tu hir ma byt array'+result)
-                    //console.log('Tu hir ma byt calc: '+this.state.calc)
+                    //console.log(result)
+
                 },
 
                 (error) => {
@@ -36,10 +44,11 @@ class tableAllCalc extends React.Component {
                     });
                 }
             )
+
+
     }
 
     renderTableCalc(){
-
 
         if(this.state.calc!=undefined){
 
@@ -75,7 +84,7 @@ class tableAllCalc extends React.Component {
         return (
             <div>
                 <h1 id='title'>React Dynamic Table</h1>
-                <table id='calcs'>
+                <table id='calcs' row>
                     <tbody>
                     <th>ID</th>
                     <th>Number 1</th>
@@ -84,6 +93,8 @@ class tableAllCalc extends React.Component {
                     {this.renderTableCalc()}
                     </tbody>
                 </table>
+
+
             </div>
         )
     }
