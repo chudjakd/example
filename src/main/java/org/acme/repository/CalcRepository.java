@@ -1,6 +1,7 @@
 package org.acme.repository;
 
 
+import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import org.acme.model.Calc;
 
@@ -13,6 +14,7 @@ public class CalcRepository implements PanacheRepository<Calc> {
 
 
     public List<Calc> getAllCalc(){
+        System.out.println(listAll());
         return listAll();
     }
 
@@ -36,7 +38,11 @@ public class CalcRepository implements PanacheRepository<Calc> {
     }
 
     public Calc getCalcByCount(int count){
-        return find("count",count).firstResult();
+
+        Calc calcByCount=find("countofnumbers",count).firstResult();
+
+        System.out.println(calcByCount);
+        return calcByCount;
     }
 
 }

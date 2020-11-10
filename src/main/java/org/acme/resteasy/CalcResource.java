@@ -49,6 +49,13 @@ public class CalcResource {
         return calcRepository.getAllCalc();
     }
 
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/count/{count}")
+    public Calc getCalcByCount(@PathParam("count")int count){
+        return calcRepository.getCalcByCount(count);
+    }
+
     @PUT
     @Transactional
     @Consumes(MediaType.APPLICATION_JSON)
