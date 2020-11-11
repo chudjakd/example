@@ -3,6 +3,7 @@ package org.acme.repository;
 
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
+import io.quarkus.panache.common.Sort;
 import org.acme.model.Calc;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -14,8 +15,7 @@ public class CalcRepository implements PanacheRepository<Calc> {
 
 
     public List<Calc> getAllCalc(){
-        System.out.println(listAll());
-        return listAll();
+        return listAll(Sort.by("id"));
     }
 
     public Calc getById(Long id){
@@ -24,9 +24,8 @@ public class CalcRepository implements PanacheRepository<Calc> {
 
     public void createCalc(Calc calc){
         calc.countTheResult();
-        System.out.println("-------------------------Vytvaram Calc--------------------------------");
-        System.out.println(calc);
         persist(calc);
+
     }
 
     public boolean deleteCalcById(Long id){
@@ -40,8 +39,6 @@ public class CalcRepository implements PanacheRepository<Calc> {
     public Calc getCalcByCount(int count){
 
         Calc calcByCount=find("countofnumbers",count).firstResult();
-
-        System.out.println(calcByCount);
         return calcByCount;
     }
 

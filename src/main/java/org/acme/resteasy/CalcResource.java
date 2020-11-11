@@ -61,15 +61,15 @@ public class CalcResource {
     @PUT
     @Transactional
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("/update/{id}")
+    @Path("/{id}")
     public void updateCalc(Calc calc,@PathParam("id")String id){
         calcRepository.updateCalc(calc,Long.parseLong(id));
     }
 
-    @GET
+    @DELETE
     @Produces(MediaType.TEXT_PLAIN)
     @Transactional
-    @Path("/delete/{id}")
+    @Path("/{id}")
     public String deleteCalcById(@PathParam("id") String id){
         boolean deleted=calcRepository.deleteCalcById(Long.parseLong(id));
        return String.valueOf(deleted);
