@@ -1,5 +1,5 @@
 import React from 'react'
-
+import CrudMenu from './crudMenu'
 
 
 class tableAllCalc extends React.Component {
@@ -10,7 +10,8 @@ class tableAllCalc extends React.Component {
         this.state={
             calc:[],
             isLoaded:false,
-            dataToReactTable:[{id:1,name:'Picko'},{id:2,name:'Picko'}]
+            clickedId:null
+
         }
 
         this.renderTableCalc=this.renderTableCalc.bind(this)
@@ -19,12 +20,12 @@ class tableAllCalc extends React.Component {
 
     componentDidMount() {
         this.getDataForTable();
-        setInterval(this.getDataForTable,3000)
+        setInterval(this.getDataForTable,1800)
     }
 
-    //Fetch data from backend
+    //Fetch data from backend for my table
     getDataForTable(){
-        console.log('------------------Fetchujem Data-----------------------')
+
         fetch("http://localhost:8080/calc")
             .then(res => res.json())
             .then(
@@ -39,7 +40,7 @@ class tableAllCalc extends React.Component {
 
                 (error) => {
                     this.setState({
-                        isLoaded: true,
+                        isLoaded: false,
                         error
                     });
                 }
@@ -47,7 +48,6 @@ class tableAllCalc extends React.Component {
 
 
     }
-
     renderTableCalc(){
 
         if(this.state.calc!=undefined){
@@ -56,7 +56,7 @@ class tableAllCalc extends React.Component {
                 const {id,number1,number2,countofnumbers} =calculator
                 return (
                     <tr key={id}>
-                        <td>{id}</td>
+                        <td className="idInTable">{id}</td>
                         <td>{number1}</td>
                         <td>{number2}</td>
                         <td>{countofnumbers}</td>
@@ -78,12 +78,10 @@ class tableAllCalc extends React.Component {
 
     }
 
-
-
     render() {
         return (
             <div>
-                <h1 id='title'>React Dynamic Table</h1>
+                <h1 id='title'>Calc Table</h1>
                 <table id='calcs' row>
                     <tbody>
                     <th>ID</th>
@@ -94,7 +92,7 @@ class tableAllCalc extends React.Component {
                     </tbody>
                 </table>
 
-
+                <CrudMenu/>
             </div>
         )
     }
