@@ -26,3 +26,12 @@ code {
 #calcs th, td {
   border: 1px solid white;
 }
+
+.createComponent label, .UpdateComponent label{
+  font-size: 0.7em;
+  padding-right: 0.5em;
+}
+
+.createComponent input, .UpdateComponent input{
+  margin-right: 1em;
+}
