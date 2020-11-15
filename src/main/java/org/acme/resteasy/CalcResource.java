@@ -1,7 +1,18 @@
 package org.acme.resteasy;
 
+import io.quarkus.vertx.web.ReactiveRoutes;
+import io.quarkus.vertx.web.Route;
+import io.quarkus.vertx.web.RoutingExchange;
+import io.smallrye.mutiny.Multi;
+import io.smallrye.mutiny.Uni;
+import io.vertx.core.http.HttpMethod;
+import io.vertx.ext.web.RoutingContext;
+import io.vertx.reactivex.core.http.HttpServerResponse;
 import org.acme.model.Calc;
 import org.acme.repository.CalcRepository;
+import org.acme.repository.FruitRepository;
+import org.eclipse.microprofile.faulttolerance.Retry;
+import org.eclipse.microprofile.faulttolerance.Timeout;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -9,6 +20,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
+import java.util.Random;
 
 @Path("/calc")
 public class CalcResource {
@@ -16,6 +28,24 @@ public class CalcResource {
     @Inject
     CalcRepository calcRepository;
 
+
+    public void maybeFail(){
+
+        System.out.println("------I AM TRYING PLEASE DONT KILL ME-----");
+
+        if(new Random().nextBoolean()){
+
+            throw new RuntimeException("Selhali sme");
+        }
+    }
+
+    @Route(path = "/helloTry", methods = HttpMethod.GET)
+    Multi<String> hello(RoutingExchange re){
+        //System.out.println(rc);
+        System.out.println(re);
+        return ReactiveRoutes.asJsonArray(Multi.createFrom().items("HELLOOOOO WORLRRRRLLLD","AAAAAAA"));
+
+    }
 
 
     @POST
@@ -45,10 +75,41 @@ public class CalcResource {
 
     }
 
+//    @GET
+//    @Produces(MediaType.APPLICATION_JSON)
+//    //@Retry(maxRetries = 5)
+//    @Timeout(3000)
+//    public Response getAllCalcWithResponse() {
+//        long started=System.currentTimeMillis();
+//        //this.maybeFail();
+//
+//        try{
+//            randomDelay();
+//            System.out.println(System.currentTimeMillis()-started);
+//            return Response.ok(calcRepository.getAllCalc()).build();
+//        }catch (InterruptedException e){
+//            System.out.println("Sme v picisku");
+//            return null;
+//        }
+//
+//
+//    }
+
+//    private void randomDelay() throws InterruptedException{
+//        Thread.sleep(new Random().nextInt(5000));
+//    }
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Calc>getAllCalcWithResponse() {
-        return calcRepository.getAllCalc();
+    public Response getAllCalcWithResponse() {
+        try{
+            return Response.ok(calcRepository.getAllCalc()).build();
+        }catch (Exception e){
+            System.out.println("Sme v picisku");
+            return null;
+        }
+
+
     }
 
     @GET

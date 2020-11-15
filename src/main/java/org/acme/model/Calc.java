@@ -1,5 +1,7 @@
 package org.acme.model;
 
+import io.quarkus.hibernate.orm.PersistenceUnit;
+
 import javax.persistence.*;
 
 @Entity(name ="calc")

@@ -1,5 +1,6 @@
 import React from 'react'
 import CrudMenu from './crudMenu'
+import FruitSocket from "./fruitSocket";
 
 
 class tableAllCalc extends React.Component {
@@ -50,7 +51,7 @@ class tableAllCalc extends React.Component {
     }
     renderTableCalc(){
 
-        if(this.state.calc!=undefined){
+        if(this.state.calc!==undefined){
 
             return this.state.calc.map((calculator,index) => {
                 const {id,number1,number2,countofnumbers} =calculator
@@ -81,6 +82,7 @@ class tableAllCalc extends React.Component {
     render() {
         return (
             <div>
+
                 <h1 id='title'>Calc Table</h1>
                 <table id='calcs' row>
                     <tbody>
@@ -93,6 +95,9 @@ class tableAllCalc extends React.Component {
                 </table>
 
                 <CrudMenu/>
+
+                <FruitSocket/>
+
             </div>
         )
     }

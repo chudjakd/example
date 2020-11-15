@@ -8,13 +8,13 @@ import org.acme.model.Calc;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.util.List;
+import java.util.Random;
 
 @ApplicationScoped
 public class CalcRepository implements PanacheRepository<Calc> {
 
-
-
     public List<Calc> getAllCalc(){
+
         return listAll(Sort.by("id"));
     }
 

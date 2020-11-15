@@ -12,18 +12,23 @@ code {
     monospace;
 }
 
-#calcs{
+#calcs,#fruits{
   background: #00A1E2;
   border-collapse: collapse;
   margin: 0 auto;
 }
 
-#calcs th{
+#calcs th,
+#fruits th
+{
   color: black;
 
 }
 
-#calcs th, td {
+#calcs th,
+td,
+#fruits th
+{
   border: 1px solid white;
 }
 
