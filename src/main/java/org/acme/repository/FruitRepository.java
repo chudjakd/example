@@ -19,8 +19,9 @@ public class FruitRepository implements Dao<Fruit> {
 
 
     @Override
-    public Optional<Fruit> getById(long id) {
-        return Optional.empty();
+    public Fruit getById(long id) {
+        Fruit fruit= entityManager.find(Fruit.class,id);
+        return fruit;
     }
 
     @Override
@@ -35,6 +36,8 @@ public class FruitRepository implements Dao<Fruit> {
     @Override
     public void save(Fruit fruit) {
 
+        entityManager.persist(fruit);
+
     }
 
     @Override
@@ -43,7 +46,7 @@ public class FruitRepository implements Dao<Fruit> {
     }
 
     @Override
-    public void delete(Fruit fruit) {
+    public void delete(long id) {
 
     }
 }

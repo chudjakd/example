@@ -8,8 +8,8 @@ import java.util.Optional;
 
 public class FruitDao implements Dao<Fruit> {
     @Override
-    public Optional<Fruit> getById(long id) {
-        return Optional.empty();
+    public Fruit getById(long id) {
+        return null;
     }
 
     @Override
@@ -28,7 +28,8 @@ public class FruitDao implements Dao<Fruit> {
     }
 
     @Override
-    public void delete(Fruit fruit) {
+    public void delete(long id) {
 
     }
+
 }

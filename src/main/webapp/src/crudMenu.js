@@ -68,10 +68,10 @@ class crudMenu extends React.Component{
     clickOnIdFetchDataByClickedId(event){
 
         //Kontrola ci sa kliklo na id kde odoberame class name z kliknuteho elementu
-        if(event.target.className==='idInTable'){
-            const clikedId=event.target.innerHTML;
+        if(event.target.className==='idInTableCalc'){
+            const clickedId=event.target.innerHTML;
 
-            let url="http://localhost:8080/calc/"+clikedId
+            let url="http://localhost:8080/calc/"+clickedId
             fetch(url)
                 .then(response => response.json())
                 .then(

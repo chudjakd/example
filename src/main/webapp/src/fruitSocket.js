@@ -1,6 +1,6 @@
 import React from 'react';
 //import { w3cwebsocket as W3CWebSocket } from "websocket";
-
+import CrudMenuWithWebSocket from "./crudMenuWithWebSocket";
 //const clientis= new W3CWebSocket('ws://127.0.0.1:8080/username/jazda');
 const socket = new WebSocket('ws://127.0.0.1:8080/fruit/jazda');
 
@@ -17,33 +17,53 @@ class FruitSocket extends React.Component{
         this.onMessageGetData=this.onMessageGetData.bind(this);
         this.sendDataToClient=this.sendDataToClient.bind(this);
         this.renderTableFruit=this.renderTableFruit.bind(this);
+        this.sendDataToClient=this.sendDataToClient.bind(this);
     }
 
-    componentWillMount(){
+    componentDidMount() {
+
         socket.onopen = () => {
             console.log('WebSocket Client Connected')
         }
 
-    }
-    componentDidMount() {
         this.onMessageGetData();
     }
 
+
     onMessageGetData = () =>{
-        console.log("Som v on message")
+
         socket.onmessage = (message) => {
 
-            var allFruits= JSON.parse(message.data)
+            console.log("TEJKUJEM TO MOZNO JA: "+message)
+            var allFromMessage= JSON.parse(message.data)
 
-            this.setState({
-                fruits:allFruits
-            })
+            const responseMessageFromWebsocket=allFromMessage.map.Response;
+            if(responseMessageFromWebsocket==="ResponseGetAllFruit"){
+                var allFruits= allFromMessage.map.Data.list
+
+
+
+                this.setState({
+                    fruits:allFruits
+                })
+            }
         }
     }
 
-    sendDataToClient = () => {
-        console.log("Sendujem data to server")
-        socket.send("AAAAAAA")
+    sendDataToClient = (data) => {
+        console.log('toto su data'+JSON.stringify(data))
+
+        socket.send(JSON.stringify(data));
+    }
+
+    createFruit = () => {
+        var name='Orange';
+        var season='Summer'
+        var msg = {
+            type: "create-fruit",
+            data: {name:name,season:season},
+        };
+        this.sendDataToClient(msg);
     }
 
 
@@ -81,9 +101,6 @@ class FruitSocket extends React.Component{
         return (
             <div>
 
-                Practical Intro To WebSockets.
-
-                <button onClick={this.sendDataToClient} >Hellou</button>
                 <button onClick={this.onMessageGetData}>GetData</button>
 
                 <h1 id='title'>Fruit Table</h1>
@@ -95,6 +112,10 @@ class FruitSocket extends React.Component{
                     {this.renderTableFruit()}
                     </tbody>
                 </table>
+
+                <CrudMenuWithWebSocket>
+
+                </CrudMenuWithWebSocket>
 
             </div>
         );

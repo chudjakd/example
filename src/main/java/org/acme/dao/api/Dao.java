@@ -5,9 +5,9 @@ import java.util.Optional;
 
 public interface Dao<T> {
 
-    Optional<T> getById(long id);
+    T getById(long id);
     List<T> getAll();
     void save(T t);
     void update(T t,long id);
-    void delete(T t);
+    void delete(long id);
 }

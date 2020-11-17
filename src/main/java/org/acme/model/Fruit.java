@@ -17,7 +17,7 @@ import java.util.stream.StreamSupport;
 @Entity
 public class Fruit {
     @Id
-    @SequenceGenerator(name = "fruitSeq", sequenceName = "fruit_id_seq", allocationSize = 1, initialValue = 4)
+    @SequenceGenerator(name = "fruitSeq", sequenceName = "fruit_id_seq", allocationSize = 1, initialValue = 9)
     @GeneratedValue(generator = "fruitSeq")
     public Long id;
     public String name;
@@ -34,6 +34,14 @@ public class Fruit {
 
     public Fruit(String name, String season) {
         this.name = name;
+        this.season = season;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSeason(String season) {
         this.season = season;
     }
 

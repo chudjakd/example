@@ -3,6 +3,7 @@ import React from 'react';
 import './App.css';
 import TableAllClc from './tableAllCalc'
 import CrudMenu from './crudMenu'
+import FruitSocket  from "./fruitSocket";
 
 class App extends React.Component {
 
@@ -14,6 +15,9 @@ class App extends React.Component {
         <div className="Appka">
             <TableAllClc>
             </TableAllClc>
+            <FruitSocket>
+
+            </FruitSocket>
         </div>
     </div>
   );

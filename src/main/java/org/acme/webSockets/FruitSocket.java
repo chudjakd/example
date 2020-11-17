@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.acme.model.Fruit;
 import org.acme.repository.FruitRepository;
+import org.acme.webSockets.logic.FruitSocketLogic;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -28,50 +29,34 @@ public class FruitSocket {
     Map<String, Session> sessions= new ConcurrentHashMap<>();
     ObjectMapper mapper  = new ObjectMapper();
 
-
     @Inject
-    FruitRepository fruitRepository;
-    @Inject
-    EntityManagerFactory entityManagerFactory;
+    FruitSocketLogic fruitSocketLogic;
 
     @OnOpen
     public void onOpen(Session session) {
         sessions.put("username", session);
-        broadcast("User " + "username" + " joined");
+        broadcast("allFruitFromDB");
     }
     @OnMessage
     public void onMessage(String message) {
-        broadcast(">> " + "username" + ": " + message);
+        broadcast(message);
     }
 
     private void broadcast(String message) {
-        Fruit fruit= new Fruit(1L,"Watermelon","Picovinka");
-        Fruit fruit2= new Fruit(2L,"Orange","Jar");
-        List<Fruit> allFruits= new ArrayList<>();
-        allFruits.add(fruit);
-        allFruits.add(fruit2);
-//        getDataFromTable();
-        EntityManager entityManager=entityManagerFactory.createEntityManager();
 
-        Query query=entityManager.createNativeQuery("SELECT * FROM Fruit ",Fruit.class);
+        String dataToFrontend=fruitSocketLogic.getTypeAndMakeDecision(message);
 
-        System.out.println(query.getResultList());
+        System.out.println("DATA TO FRONTEND: "+dataToFrontend);
+
         sessions.values().forEach(s -> {
-            try {
-                s.getAsyncRemote().sendObject(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(allFruits), result ->  {
+
+                s.getAsyncRemote().sendObject(dataToFrontend, result ->  {
                     if (result.getException() != null) {
                         System.out.println("Unable to send message: " + result.getException());
                     }
                 });
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-            }
+
         });
     }
-
-    public void getDataFromTable(){
-        fruitRepository.getAll();
-    }
-
 
 }

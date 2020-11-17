@@ -32,11 +32,13 @@ td,
   border: 1px solid white;
 }
 
-.createComponent label, .UpdateComponent label{
+.createComponent label, .UpdateComponent label,
+.createComponentFruit label{
   font-size: 0.7em;
   padding-right: 0.5em;
 }
 
-.createComponent input, .UpdateComponent input{
+.createComponent input, .UpdateComponent input,
+.createComponentFruit input{
   margin-right: 1em;
 }

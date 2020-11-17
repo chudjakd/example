@@ -57,7 +57,7 @@ class tableAllCalc extends React.Component {
                 const {id,number1,number2,countofnumbers} =calculator
                 return (
                     <tr key={id}>
-                        <td className="idInTable">{id}</td>
+                        <td className="idInTableCalc">{id}</td>
                         <td>{number1}</td>
                         <td>{number2}</td>
                         <td>{countofnumbers}</td>
@@ -95,8 +95,6 @@ class tableAllCalc extends React.Component {
                 </table>
 
                 <CrudMenu/>
-
-                <FruitSocket/>
 
             </div>
         )
