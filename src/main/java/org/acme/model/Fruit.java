@@ -1,18 +1,15 @@
 package org.acme.model;
 
-import io.smallrye.mutiny.Multi;
-import io.smallrye.mutiny.Uni;
 import io.vertx.reactivex.pgclient.PgPool;
 import io.vertx.reactivex.sqlclient.Row;
 import io.vertx.reactivex.sqlclient.RowSet;
-import io.vertx.reactivex.sqlclient.Tuple;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
-import java.util.List;
-import java.util.stream.StreamSupport;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 public class Fruit {
@@ -20,7 +17,9 @@ public class Fruit {
     @SequenceGenerator(name = "fruitSeq", sequenceName = "fruit_id_seq", allocationSize = 1, initialValue = 9)
     @GeneratedValue(generator = "fruitSeq")
     public Long id;
+    @NotBlank(message = "Name must not be blank")
     public String name;
+    @Max(value = 10)
     public String season;
 
     public Fruit() {
@@ -43,6 +42,14 @@ public class Fruit {
 
     public void setSeason(String season) {
         this.season = season;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSeason() {
+        return season;
     }
 
     public static void getAllFruits(PgPool client){

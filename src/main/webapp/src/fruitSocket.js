@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect,useState} from 'react';
 //import { w3cwebsocket as W3CWebSocket } from "websocket";
 import CrudMenuWithWebSocket from "./crudMenuWithWebSocket";
 //const clientis= new W3CWebSocket('ws://127.0.0.1:8080/username/jazda');
@@ -18,16 +18,11 @@ class FruitSocket extends React.Component{
         this.sendDataToClient=this.sendDataToClient.bind(this);
         this.renderTableFruit=this.renderTableFruit.bind(this);
         this.sendDataToClient=this.sendDataToClient.bind(this);
+
+
     }
 
-    componentDidMount() {
 
-        socket.onopen = () => {
-            console.log('WebSocket Client Connected')
-        }
-
-        this.onMessageGetData();
-    }
 
 
     onMessageGetData = () =>{

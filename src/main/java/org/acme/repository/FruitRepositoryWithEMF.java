@@ -10,6 +10,8 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
+import javax.validation.ConstraintViolationException;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,7 +50,7 @@ public class FruitRepositoryWithEMF implements Dao<Fruit> {
     }
 
     @Override
-    public void save(Fruit fruit) {
+    public void save(@Valid Fruit fruit) throws ConstraintViolationException {
         entityManager.getTransaction().begin();
         entityManager.persist(fruit);
         entityManager.getTransaction().commit();
