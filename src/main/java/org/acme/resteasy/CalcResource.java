@@ -4,22 +4,17 @@ import io.quarkus.vertx.web.ReactiveRoutes;
 import io.quarkus.vertx.web.Route;
 import io.quarkus.vertx.web.RoutingExchange;
 import io.smallrye.mutiny.Multi;
-import io.smallrye.mutiny.Uni;
 import io.vertx.core.http.HttpMethod;
-import io.vertx.ext.web.RoutingContext;
-import io.vertx.reactivex.core.http.HttpServerResponse;
+import org.acme.HttpProxy.GetRatesByHttpProxy;
+import org.acme.json.TutorialisSkuska;
 import org.acme.model.Calc;
 import org.acme.repository.CalcRepository;
-import org.acme.repository.FruitRepository;
-import org.eclipse.microprofile.faulttolerance.Retry;
-import org.eclipse.microprofile.faulttolerance.Timeout;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.List;
 import java.util.Random;
 
 @Path("/calc")
@@ -27,6 +22,12 @@ public class CalcResource {
 
     @Inject
     CalcRepository calcRepository;
+
+    @Inject
+    TutorialisSkuska parser;
+
+    @Inject
+    GetRatesByHttpProxy getRatesByHttpProxy;
 
 
     public void maybeFail(){
@@ -47,6 +48,14 @@ public class CalcResource {
 
     }
 
+    @GET
+    @Path("/proxy")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String skuskaProxy(){
+        getRatesByHttpProxy.createHttpProxy();
+        return "Jazda";
+    }
+
 
     @POST
     @Transactional
@@ -59,11 +68,11 @@ public class CalcResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/{id}")
-    public Calc getCalcById(@PathParam("id")String id){
+    @Path("/{id : \\d+}")
+    public Calc getCalcById(@PathParam("id")long id){
 
         try{
-            Calc calc=calcRepository.getById(Long.parseLong(id));
+            Calc calc=calcRepository.getById(id);
             if(calc==null){
                 throw new WebApplicationException(Response.Status.NOT_FOUND);
             }
@@ -74,6 +83,31 @@ public class CalcResource {
         }
 
     }
+
+    @Path("/jsonparser")
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    public String getJsonParser(){
+        parser.getJsonParser();
+        return "HELLOOOO";
+    }
+
+    @Path("/reactivemutiny")
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    public String getReactiveMutiny(){
+        parser.reactineMutinySkuska();
+        return "HELLOOOO I AM FROM REACTIVE MUTINY";
+    }
+
+//    @Path("/messaging")
+//    @GET
+//    @Produces(MediaType.TEXT_PLAIN)
+//    public String getMessaging(){
+//        parser.skusameMessagingCalc();
+//        return "HELLOOOO I AM FROM MESSAGING";
+//    }
+
 
 //    @GET
 //    @Produces(MediaType.APPLICATION_JSON)

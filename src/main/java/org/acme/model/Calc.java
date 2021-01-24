@@ -2,6 +2,7 @@ package org.acme.model;
 
 import io.quarkus.hibernate.orm.PersistenceUnit;
 
+import javax.json.bind.annotation.JsonbProperty;
 import javax.persistence.*;
 
 @Entity(name ="calc")
@@ -10,7 +11,9 @@ public class Calc  {
     @Id
     @SequenceGenerator(name = "calcSeq", sequenceName = "calc_id_seq", allocationSize = 1, initialValue = 3)
     @GeneratedValue(generator = "calcSeq")
+    @JsonbProperty(value = "calc_id")
     private Long id;
+    @JsonbProperty(value = "calc_number1")
     public int number1;
     public int number2;
     @Column(name = "countofnumbers")

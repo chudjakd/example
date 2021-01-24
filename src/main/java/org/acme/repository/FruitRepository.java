@@ -33,7 +33,14 @@ public class FruitRepository implements Dao<Fruit> {
         return allFruits;
     }
 
+    public Fruit getFruitByName(String name){
+        Query query= entityManager.createNativeQuery("SELECT * FROM FRUIT WHERE NAME=:name",Fruit.class);
+        query.setParameter("name",name);
+        return (Fruit)query.getResultList().get(0);
+    }
+
     @Override
+    @Transactional
     public void save(Fruit fruit) {
 
         entityManager.persist(fruit);

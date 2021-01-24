@@ -3,18 +3,15 @@ package org.acme.resteasy;
 
 import org.acme.model.Fruit;
 import org.acme.repository.FruitRepositoryWithEMF;
+import org.jboss.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-import javax.validation.Valid;
-import javax.validation.Validator;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.URI;
-import java.util.Set;
 
 @Path("/fruit")
 @ApplicationScoped
@@ -22,6 +19,7 @@ public class FruitResource {
 
 //    @Inject
 //    Validator validator
+    private static final Logger LOG= Logger.getLogger(FruitResource.class);
 
     @Inject
     FruitRepositoryWithEMF fruitRepositoryWithEMF;
@@ -51,6 +49,7 @@ public class FruitResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllFruit(){
 
+        LOG.info("HELLO INFO");
         return Response.ok(fruitRepositoryWithEMF.getAll()).build();
     }
 }
