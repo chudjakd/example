@@ -5,17 +5,15 @@ import io.vertx.reactivex.sqlclient.Row;
 import io.vertx.reactivex.sqlclient.RowSet;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 
 @Entity
 public class Fruit {
     @Id
-    @SequenceGenerator(name = "fruitSeq", sequenceName = "fruit_id_seq", allocationSize = 1, initialValue = 9)
-    @GeneratedValue(generator = "fruitSeq")
+//    @SequenceGenerator(name = "fruitSeq", sequenceName = "fruit_id_seq", allocationSize = 1, initialValue = 9)
+//    @GeneratedValue(generator = "fruitSeq")
     public Long id;
     @NotBlank(message = "Name must not be blank")
     public String name;
@@ -36,12 +34,22 @@ public class Fruit {
         this.season = season;
     }
 
+
+
     public void setName(String name) {
         this.name = name;
     }
 
     public void setSeason(String season) {
         this.season = season;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {

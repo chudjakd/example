@@ -1,5 +1,7 @@
 package org.acme.repository;
 
+import org.acme.model.Fruit;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -49,6 +51,33 @@ public class PreTestSkuska {
             e.printStackTrace();
         }
 
+    }
+
+    @Transactional
+    public void insertFruitsIntoDBWithJpa(){
+        Fruit fruit= new Fruit();
+        fruit.setId(536L);
+        fruit.setName("Jablcko1");
+        fruit.setSeason("Leticko1");
+
+        Fruit fruit2= new Fruit();
+        fruit2.setId(537L);
+        fruit2.setName("Jablcko2");
+        fruit2.setSeason("Leticko2");
+
+        entityManager.persist(fruit);
+
+        entityManager.persist(fruit2);
+    }
+
+    @Transactional
+    public void deleteFruitsFromDBWithJpa(){
+        Fruit fruit= entityManager.find(Fruit.class,536L);
+        Fruit fruit2= entityManager.find(Fruit.class,537L);
+
+        entityManager.remove(fruit);
+
+        entityManager.remove(fruit2);
     }
 
     @Transactional

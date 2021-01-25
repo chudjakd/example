@@ -21,13 +21,15 @@ class FruitRepositoryTest {
     @BeforeAll
     void insertDataIntoDB(){
         //preTestSkuska.insertCalcIntoDB();
-        preTestSkuska.insertDataIntoDB();
+        //preTestSkuska.insertDataIntoDB();
+        preTestSkuska.insertFruitsIntoDBWithJpa();
     }
 
     @AfterAll
     void deleteDataInDB(){
         //preTestSkuska.insertCalcIntoDB();
-        preTestSkuska.deleteDataInDB();
+        //preTestSkuska.deleteDataInDB();
+        preTestSkuska.deleteFruitsFromDBWithJpa();
     }
     @Test
     public void testGetAllFruitsFromDB(){
@@ -38,7 +40,7 @@ class FruitRepositoryTest {
 
     @Test
     public void testGetFruitByName(){
-        Fruit fruit= fruitRepository.getFruitByName("Mandarinka");
-        Assertions.assertEquals("Leto",fruit.getSeason());
+        Fruit fruit= fruitRepository.getFruitByName("Jablcko1");
+        Assertions.assertEquals("Leticko1",fruit.getSeason());
     }
 }
